@@ -1,0 +1,21 @@
+lo basico es agregar pacientes en la vista de pacientes y en la de doctores
+1.-Agregar una cita los rasgos mas importantes son la fecha y la hora 
+(de ello depende la vista de turnos)
+2.- Abrir una ventana para turnos y una ventana para tablero
+3.- En la vista turnos la tabla de arriba hay que seleccionar siempre primero "REINICIAR TABLA"
+(Esto debido a que en la base de datos necesito reiniciar los turno)
+4.- (La tabla de arriba es de las citas del dia de hoy y que no estan confirmadas)
+(La tabla de abajo ya tiene las citas confirmadas)
+Se confirman las citas con el boton de la palomita
+(tiene un pequeño error si lo hace muy rapido, dele unos segundos antes de confirmar el sig)
+(el error se puede solucionar si hago que se recargue la pagina cada vez que se confirma una cita)
+5.- Una vez confirmadas las citas se da en comenzar tabla 
+( No manda ninguna alerta de que ya comenzo) 
+6.- Presione siguiente para cambiar turno (puede tardar entre 0-5 segundos en cambiar)
+
+puntos que hay que considerar a cambiar
+-las tablas de las vista turno indicar cual es la de confirmacion y cual es la normal
+-el boton siguiente tabla debe esta deshabilitado hasta que se presione comenzar tabla
+-quiza cambiar el nombre de los botones, o colores
+-no se si quiere que el boton siguiente y comenzar lancen una alerta pequeña de que ya se presiono
+-que el boton siguiente se deshabilite cuando ya no haya mas turnos
