@@ -8,6 +8,7 @@ function siguiente() {
   var turno;
   var nombre;
   var accion = "comenzar"
+  
   $.ajax({
     type: "POST",
     url: "",
