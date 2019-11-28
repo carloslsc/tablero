@@ -2,9 +2,96 @@
 $(document).ready(function () {  
     $('#dtTurnoExample').DataTable();  
     $('#dtTurnoHoyExample').DataTable();
+
+    $('#dtTurnoVigenteExample').DataTable( {
+      "ajax": "../public/json/Turno.json",
+      "columns": [
+          {
+            "render": function (data, type, JsonResultRow, meta) {
+              return '<div id="fecha'+JsonResultRow.turno+'">'+JsonResultRow.turno+'</div>';
+            }
+          },
+          {
+            "render": function (data, type, JsonResultRow, meta) {
+                return '<div id="paciente'+JsonResultRow.turno+'">'+JsonResultRow.nombre_paciente+' '+JsonResultRow.app_paciente+' '+JsonResultRow.apm_paciente+'</div>';
+            }
+          }
+      ]
+  });
+
+    SolicitudInicial();
 });
-    
-    
+
+
+
+var Turno;
+
+function SolicitudInicial() {
+  var accion = "solicitudinicial";
+
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: {'accion':accion},
+      success: function(data){
+        var datos = JSON.parse(data);
+        if(datos.turno == 0){
+          $("#SiguienteBoton").prop('disabled', true);
+          $("#AtrasBoton").prop('disabled', true);
+        }else if(datos.turno >= 2){
+          $("#SiguienteBoton").prop('disabled', false);
+          $("#AtrasBoton").prop('disabled', false);
+          $("#ComenzarBoton").prop('disabled', true);
+        }else{
+          $("#AtrasBoton").prop('disabled', true);
+          $("#SiguienteBoton").prop('disabled', false);
+          $("#ComenzarBoton").prop('disabled', true);
+        }
+        Turno = datos.turno;
+      }
+    })
+}
+ 
+
+function Solicitud() {
+  var accion = "solicitud";
+
+  var Filas = $("#dtTurnoVigenteExample tr").length;
+
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: {'accion':accion},
+      success: function(data){
+        var datos = JSON.parse(data);
+        Turno = datos[0].turno;
+        var Nombre = datos[0].nombre_paciente;
+        var App = datos[0].app_paciente;
+        var Apm = datos[0].apm_paciente;
+        if(datos[0].turno == 0){
+          $("#SiguienteBoton").prop('disabled', true);
+          $("#AtrasBoton").prop('disabled', true);
+        }else if(datos[0].turno >= 2){
+          $("#SiguienteBoton").prop('disabled', false);
+          $("#AtrasBoton").prop('disabled', false);
+          $("#ComenzarBoton").prop('disabled', true);
+        }else{
+          $("#AtrasBoton").prop('disabled', true);
+          $("#SiguienteBoton").prop('disabled', false);
+          $("#ComenzarBoton").prop('disabled', true);
+        }
+        console.log(Filas);
+        //Turno = datos[0].turno;
+        $('#dtTurnoVigenteExample').DataTable().clear().draw();
+        $('#dtTurnoVigenteExample').DataTable().destroy();
+        $('#dtTurnoVigenteExample').DataTable().row.add( [
+          '<div id="fecha'+Turno+'">'+Turno+'</div>',
+          Nombre+' '+App+' '+Apm
+        ]).draw( false );
+      }
+    })
+}
+
     function ConfirmCita(id) {
         var fecha = $('tr td #ConfirmCitaModal').parents('tr').find('#fecha'+id).text();
         var hora = $('tr td #ConfirmCitaModal').parents('tr').find('#hora'+id).text();
@@ -73,7 +160,8 @@ $(document).ready(function () {
         url: "",
         data: {'accion':accion},
         success: function(data){
-          location.reload();
+          //location.reload();
+          Solicitud();
         }
       })
     }
@@ -86,6 +174,20 @@ $(document).ready(function () {
         data: {'accion':accion},
         success: function(data){
           //location.reload();
+          Solicitud();
+        }
+      })
+    }
+
+    function Atras() {
+      var accion = "atras";
+      $.ajax({
+        type: "POST",
+        url: "",
+        data: {'accion':accion},
+        success: function(data){
+          //location.reload();
+          Solicitud();
         }
       })
     }

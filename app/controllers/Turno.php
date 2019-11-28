@@ -10,12 +10,24 @@
         function turno(){
             $citas = $this->citaModelo->getCitasHoy();
             $citaConfirm = $this->citaModelo->getCitasHoyConfirm();
+            $turno = $this->citaModelo->getCitaTurno();
 
             $datos = [
                 'cita' => $citas,
                 'citaConfirm' => $citaConfirm
             ];
 
+      
+            $data = [
+                    'data' => $turno,
+                ];
+        
+            $jsonencoded = json_encode($data, JSON_UNESCAPED_UNICODE);
+    
+            $fh = fopen("../public/json/Turno.json", 'w');
+            fwrite($fh, $jsonencoded);
+            fclose($fh);
+            
             //Validamos que se realizó una solicitud del metodo Post
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if($_POST['accion'] == 'confirmar'){
@@ -54,6 +66,24 @@
                         print_r("Algo Salio Mal");
                     }
                 }
+                else if($_POST['accion'] == 'solicitud'){
+
+                    if($solicitud = $this->citaModelo->getCitaTurno()){
+                        echo json_encode($solicitud);
+                        //$this->vista('pages/turno', $datos);
+                    }else{
+                        print_r("Algo Salio Mal");
+                    }
+                }
+                else if($_POST['accion'] == 'solicitudinicial'){
+
+                    if($solicitud = $this->citaModelo->solicitudTurno()){
+                        echo json_encode($solicitud);
+                        //$this->vista('pages/turno', $datos);
+                    }else{
+                        print_r("Algo Salio Mal");
+                    }
+                }
                 else if($_POST['accion'] == 'reiniciar'){
 
                     if($this->citaModelo->restart()){
@@ -84,6 +114,21 @@
                         print_r("Algo Salio Mal");
                     }
                 }
+                else if($_POST['accion'] == 'atras'){
+
+                    $sig = $this->citaModelo->getTurno(); 
+
+                    $data = [
+                        'turno' => $sig->turno
+                    ];
+
+                    if($this->citaModelo->beforeTurno($data)){
+                        $this->vista('pages/turno', $datos);
+                    }else{
+                        print_r("Algo Salio Mal");
+                    }
+                }
+
             }else{
                 $this->vista('pages/turno', $datos);
             }

@@ -29,6 +29,20 @@
             return $this->db->registers();
         }
 
+        public function getCitaTurno(){
+            $this->db->query("SELECT * FROM `cita` AS c INNER JOIN `cita_hoy` AS ch INNER JOIN `turno_vigente` AS t INNER JOIN `paciente` AS p ON c.`paciente_cita`=p.`id_paciente` AND t.`turno`=ch.`turno_cita_hoy` AND c.`fecha_cita`=:fecha AND c.`id_cita`=ch.`id_cita_cita_hoy` ORDER BY c.`hora_cita`;");
+            
+            $this->db->bind(':fecha', date("Y-m-d"));
+
+            return $this->db->registers();
+        }
+
+        public function solicitudTurno(){
+            $this->db->query("SELECT * FROM `turno_vigente`;");
+            
+            return $this->db->register();
+        }
+
         public function getCitasHoyConfirm(){
             $this->db->query("SELECT * FROM `cita` AS c INNER JOIN `cita_hoy` AS ch INNER JOIN `doctor` AS d INNER JOIN `paciente` AS p 
             ON c.`paciente_cita`=p.`id_paciente` AND c.`doctor_cita`=d.`id_doctor` AND `fecha_cita`=:fecha AND c.`id_cita`=ch.`id_cita_cita_hoy` ORDER BY c.`hora_cita`;");
@@ -191,7 +205,7 @@
         }
 
         public function startTurno(){
-            $this->db->query("CALL actualizar_turno();");
+            $this->db->query("UPDATE turno_vigente SET turno = 1;");
                 
             //Ejecutar
             if($this->db->execute()){
@@ -212,6 +226,19 @@
             $this->db->query("UPDATE turno_vigente SET turno=:turno;");
                     
             $this->db->bind(':turno', ($data['turno']+1));
+
+            //Ejecutar
+            if($this->db->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function beforeTurno($data){
+            $this->db->query("UPDATE turno_vigente SET turno=:turno;");
+                    
+            $this->db->bind(':turno', ($data['turno']-1));
 
             //Ejecutar
             if($this->db->execute()){

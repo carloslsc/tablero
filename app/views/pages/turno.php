@@ -1,4 +1,9 @@
 <?php require_once RUTA_APP . '/views/inc/header.php'; ?>
+<div class="view view-cascade gradient-card-header red accent-4 narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                    <div></div>
+                    <a href="#" class="white-text mx-3">CITAS SIN CONFIRMAR</a>
+                    <div></div>
+                </div>
                     <table id="dtTurnoExample" class="table table-striped table-bordered dt-responsive nowrap display" style="width:100%">
                         <thead>
                             <tr>
@@ -37,20 +42,47 @@
                             <?php endforeach;?>
                         </tbody>
                     </table>
+                <div class="view view-cascade gradient-card-header red accent-4 narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                    <div></div>
+                    <a href="#" class="white-text mx-3">TURNO ACTUAL</a>
+                    <div></div>
+                </div>
+                    <table id="dtTurnoVigenteExample" class="table table-striped table-bordered dt-responsive nowrap display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="th-sm">TURNO
+                                </th>
+                                <th class="th-sm">PACIENTE
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                     <div class="row">
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                             <div class="form-group">
-                                <a id="ReiniciarBoton" style="width:100%;" onclick="Reiniciar()" class="btn unique-color waves-effect"><i class="fas fa-redo" aria-hidden="true"></i> REINICIAR TABLA</a>
+                                <button id="ReiniciarBoton" style="width:100%;" onclick="Reiniciar()" class="btn unique-color waves-effect"><i class="fas fa-redo" aria-hidden="true"></i> REINICIAR TABLA</button>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                             <button id="ComenzarBoton" style="width:100%;" onclick="Comenzar()" class="btn success-color waves-effect" type="submit"><i class="fas fa-play" aria-hidden="true"></i> COMENZAR TABLA</button>
                         </div>
-                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
                             <div class="form-group">
-                                <a id="SiguienteBoton" style="width:100%;" onclick="Siguiente()" class="btn info-color waves-effect"><i class="fas fa-arrow-right" aria-hidden="true"></i> SIGUIENTE</a>
+                                <button id="AtrasBoton" style="width:100%;" onclick="Atras()" class="btn danger-color waves-effect"><i class="fas fa-arrow-left" aria-hidden="true"></i> ATRAS</button>
                             </div>    
                         </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                <button data-dismiss="toast" id="SiguienteBoton" style="width:100%;" onclick="Siguiente()" class="btn primary-color waves-effect"><i class="fas fa-arrow-right" aria-hidden="true"></i> SIGUIENTE</button>   
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="view view-cascade gradient-card-header red accent-4 narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                        <div></div>
+                        <a href="#" class="white-text mx-3">CITAS CONFIRMADAS</a>
+                        <div></div>
                     </div>
                     <table id="dtTurnoHoyExample" class="table table-striped table-bordered dt-responsive nowrap display" style="width:100%">
                         <thead>
